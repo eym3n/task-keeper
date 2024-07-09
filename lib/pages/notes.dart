@@ -10,9 +10,14 @@ class NotesPage extends StatefulWidget {
 class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) {
+    // final currentDay = DateTime.now().day;
+    // final currentMonth = DateTime.now().month;
+
     return const Scaffold(
       body: Center(
-        child: Text('Notes Page'),
+        child: Text(
+          'Notes Page',
+        ),
       ),
     );
   }

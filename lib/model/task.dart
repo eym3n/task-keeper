@@ -36,7 +36,9 @@ class Task {
         title = map['title'],
         description = map['description'],
         completed = map['completed'] == 1,
-        date = DateTime.parse(map['date']);
+        date = DateTime.parse(map['date']),
+        important = map['important'] == 1,
+        color = Color(map['color']);
 
   Map<String, dynamic> toMap() {
     return {
@@ -44,7 +46,9 @@ class Task {
       'title': title,
       'description': description,
       'completed': completed ? 1 : 0,
-      'date': date.toIso8601String()
+      'date': date.toIso8601String(),
+      'important': important ? 1 : 0,
+      'color': color.value
     };
   }
 }

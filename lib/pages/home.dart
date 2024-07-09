@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:intl/intl.dart';
-import "package:notes_app/data/tasks.dart";
+import 'package:notes_app/db/sqflite.dart';
+import 'package:notes_app/model/task.dart';
 import 'package:notes_app/widget/task_card.dart';
 import 'package:notes_app/widget/task_widget.dart';
 
@@ -17,22 +18,37 @@ const cardColor = Color(0xFFFFF1BE);
 
 class _HomePageState extends State<HomePage> {
   final CardSwiperController controller = CardSwiperController();
+  var tasks = <Task>[];
 
-  final cards = tasks
-      .map((task) => TaskCard(
-            task: task,
-            showDescription: false,
-          ))
-      .toList();
+  void getData() async {
+    var t = await Db.getTasks();
 
-  final taskWidgets = tasks
-      .map((task) => TaskWidget(
-            task: task,
-          ))
-      .toList();
+    setState(() {
+      tasks = t.map((e) => Task.fromMap(e)).toList();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final cards = tasks
+        .map((task) => TaskCard(
+              task: task,
+              showDescription: false,
+            ))
+        .toList();
+
+    final taskWidgets = tasks
+        .map((task) => TaskWidget(
+              task: task,
+            ))
+        .toList();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
