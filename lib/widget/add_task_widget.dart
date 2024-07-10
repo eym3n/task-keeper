@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:mobkit_dashed_border/mobkit_dashed_border.dart';
 import 'package:notes_app/model/task.dart';
+import 'package:notes_app/pages/task_editor.dart';
 import 'package:notes_app/utils/functions.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:redux/redux.dart';
@@ -27,13 +28,20 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       builder: (context, addTask) {
         return InkWell(
           onTap: () {
-            addTask(Task(
+            var task = Task(
               id: randId(16),
-              title: 'This is a new task',
-              description: 'Add a description',
+              title: '',
+              description: '',
               completed: false,
               date: widget.date,
-            ));
+            );
+            addTask(task);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => TaskEditor(
+                          task: task,
+                        )));
           },
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
