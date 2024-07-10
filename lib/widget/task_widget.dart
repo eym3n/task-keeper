@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:notes_app/model/task.dart';
+import 'package:notes_app/pages/task_editor.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:redux/redux.dart';
 import 'package:tuple/tuple.dart';
@@ -148,7 +149,13 @@ class _TaskWidgetState extends State<TaskWidget> {
               ),
             );
           },
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return TaskEditor(
+                task: widget.task,
+              );
+            }));
+          },
           child: Container(
               decoration: BoxDecoration(
                 color: widget.task.color,
