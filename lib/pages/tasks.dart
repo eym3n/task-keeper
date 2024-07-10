@@ -240,7 +240,7 @@ class _TasksPageState extends State<TasksPage> {
                     child: SizedBox(
                       width: double.infinity,
                       height:
-                          (taskWidgets.length / 2 + 1).toInt() * 155.0 + 180,
+                          (taskWidgets.length / 2 + 1).toInt() * 200.0 + 180,
                       child: GridView.count(
                         padding:
                             const EdgeInsets.only(left: 5.0, right: 5, top: 20),
@@ -248,7 +248,12 @@ class _TasksPageState extends State<TasksPage> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 20,
-                        children: [...taskWidgets, const AddTaskWidget()],
+                        children: [
+                          ...taskWidgets,
+                          AddTaskWidget(
+                            date: selectedDay,
+                          )
+                        ],
                       ),
                     ),
                   )

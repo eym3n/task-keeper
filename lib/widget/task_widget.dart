@@ -35,6 +35,12 @@ class _TaskWidgetState extends State<TaskWidget> {
         final updateTask = actions.item2;
 
         return InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          onDoubleTap: () {
+            widget.task.completed = !widget.task.completed;
+            updateTask(widget.task.id, widget.task);
+          },
           onLongPress: () {
             showModalBottomSheet(
               context: context,
