@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
-import 'package:notes_app/db/sqflite.dart';
 import 'package:notes_app/model/task.dart';
+import 'package:notes_app/utils/redux.dart';
 import 'package:notes_app/widget/task_card.dart';
 import 'package:notes_app/widget/task_widget.dart';
 
@@ -18,185 +19,222 @@ const cardColor = Color(0xFFFFF1BE);
 
 class _HomePageState extends State<HomePage> {
   final CardSwiperController controller = CardSwiperController();
-  var tasks = <Task>[];
-
-  void getData() async {
-    var t = await Db.getTasks();
-
-    setState(() {
-      tasks = t.map((e) => Task.fromMap(e)).toList();
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final cards = tasks
-        .map((task) => TaskCard(
-              task: task,
-              showDescription: false,
-            ))
-        .toList();
-
-    final taskWidgets = tasks
-        .map((task) => TaskWidget(
-              task: task,
-            ))
-        .toList();
-
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(height: 60.0),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Good Morning\nAymen',
-                    style:
-                        TextStyle(fontSize: 28.0, fontWeight: FontWeight.w500),
-                  ),
-                  CircleAvatar(
-                    radius: 25.0,
-                    backgroundImage: AssetImage('assets/images/default.jpg'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        CupertinoIcons.calendar,
-                        color: Colors.black,
-                        size: 28.0,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20.0),
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: StoreConnector<AppState, List<Task>>(
+            converter: (store) => store.state.tasks,
+            builder: (BuildContext context, List<Task> tasks) {
+              final todaysTasks = tasks
+                  .where((task) =>
+                      task.date.day == DateTime.now().day &&
+                      task.date.month == DateTime.now().month &&
+                      task.date.year == DateTime.now().year)
+                  .toList();
+              final cards = todaysTasks
+                  .map((task) => TaskCard(
+                        task: task,
+                        showDescription: false,
+                      ))
+                  .toList();
+
+              final thisWeeksTasks = tasks
+                  .where((task) =>
+                      task.date.isAfter(DateTime.now()) &&
+                      task.date.isBefore(
+                          DateTime.now().add(const Duration(days: 7))))
+                  .toList();
+
+              final taskWidgets = thisWeeksTasks
+                  .map((task) => TaskWidget(
+                        task: task,
+                      ))
+                  .toList();
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    const SizedBox(height: 60.0),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Good Morning\nAymen',
+                          style: TextStyle(
+                              fontSize: 28.0, fontWeight: FontWeight.w500),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          child: Text(
-                            DateFormat.MMMEd()
-                                .format(DateTime.now())
-                                .toString(),
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
-                          ),
+                        CircleAvatar(
+                          radius: 25.0,
+                          backgroundImage:
+                              AssetImage('assets/images/default.jpg'),
                         ),
-                      )
-                    ],
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0),
+                      ],
                     ),
-                    child: const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    const SizedBox(height: 40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              CupertinoIcons.calendar,
+                              color: Colors.black,
+                              size: 28.0,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                child: Text(
+                                  DateFormat.MMMEd()
+                                      .format(DateTime.now())
+                                      .toString(),
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          child: (todaysTasks.isEmpty
+                              ? Container()
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Icon(
+                                      CupertinoIcons.alarm_fill,
+                                      color: Colors.black,
+                                      size: 14.0,
+                                    ),
+                                    const SizedBox(width: 5.0),
+                                    Text(
+                                      'You have ${todaysTasks.length} task${todaysTasks.length > 1 ? 's' : ''} today',
+                                      style: const TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                )),
+                        )
+                      ],
+                    ),
+                    (todaysTasks.length > 2
+                        ? const SizedBox(height: 60.0)
+                        : (todaysTasks.isEmpty
+                            ? const SizedBox(
+                                height: 0,
+                              )
+                            : const SizedBox(
+                                height: 30,
+                              ))),
+                    (cards.isEmpty
+                        ? SizedBox(
+                            height: 380,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                    height: 250,
+                                    child:
+                                        Image.asset('assets/images/empty.jpg')),
+                                const Text(
+                                  'No tasks for today',
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          )
+                        : SizedBox(
+                            height: 110,
+                            width: double.infinity,
+                            child: CardSwiper(
+                              maxAngle: 40,
+                              allowedSwipeDirection: (todaysTasks.length > 1
+                                  ? const AllowedSwipeDirection.symmetric(
+                                      horizontal: true, vertical: false)
+                                  : const AllowedSwipeDirection.none()),
+                              controller: controller,
+                              cardsCount: cards.length,
+                              onSwipe: _onSwipe,
+                              onUndo: _onUndo,
+                              numberOfCardsDisplayed:
+                                  cards.length > 3 ? 3 : cards.length,
+                              backCardOffset: const Offset(0, -20),
+                              padding: EdgeInsets.zero,
+                              cardBuilder: (
+                                context,
+                                index,
+                                horizontalThresholdPercentage,
+                                verticalThresholdPercentage,
+                              ) =>
+                                  cards[index],
+                            ),
+                          )),
+                    const SizedBox(height: 30.0),
+                    (thisWeeksTasks.isEmpty
+                        ? Container()
+                        : Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Coming up',
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(width: 12.0),
+                                Text('${thisWeeksTasks.length} tasks',
+                                    style: TextStyle(
+                                        fontSize: 13.0,
+                                        color: Colors.grey.shade500,
+                                        fontWeight: FontWeight.w500))
+                              ],
+                            ),
+                          )),
+                    SizedBox(
+                      width: double.infinity,
+                      height:
+                          (taskWidgets.length / 2 + 1).toInt() * 165.0 + 190,
+                      child: GridView.count(
+                        padding:
+                            const EdgeInsets.only(left: 5.0, right: 5, top: 30),
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
                         children: [
-                          Icon(
-                            CupertinoIcons.alarm_fill,
-                            color: Colors.black,
-                            size: 14.0,
-                          ),
-                          SizedBox(width: 5.0),
-                          Text(
-                            'You have 7 tasks today',
-                            style: TextStyle(
-                                fontSize: 11, fontWeight: FontWeight.w500),
-                          ),
+                          ...taskWidgets,
+                          // const AddTaskWidget(),
                         ],
                       ),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 60.0),
-              (cards.isEmpty
-                  ? Container()
-                  : SizedBox(
-                      height: 110,
-                      width: double.infinity,
-                      child: CardSwiper(
-                        maxAngle: 40,
-                        allowedSwipeDirection:
-                            const AllowedSwipeDirection.symmetric(
-                                horizontal: true, vertical: false),
-                        controller: controller,
-                        cardsCount: cards.length,
-                        onSwipe: _onSwipe,
-                        onUndo: _onUndo,
-                        numberOfCardsDisplayed:
-                            cards.length > 3 ? 3 : cards.length,
-                        backCardOffset: const Offset(0, -20),
-                        padding: EdgeInsets.zero,
-                        cardBuilder: (
-                          context,
-                          index,
-                          horizontalThresholdPercentage,
-                          verticalThresholdPercentage,
-                        ) =>
-                            cards[index],
-                      ),
-                    )),
-              const SizedBox(height: 30.0),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Coming up',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(width: 12.0),
-                    Text('${tasks.length} tasks',
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            color: Colors.grey.shade500,
-                            fontWeight: FontWeight.w500))
+                    )
                   ],
                 ),
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: (taskWidgets.length / 2 + 1).toInt() * 165.0 + 180,
-                child: GridView.count(
-                  padding: const EdgeInsets.only(left: 5.0, right: 5, top: 20),
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
-                  children: [
-                    ...taskWidgets,
-                  ],
-                ),
-              )
-            ],
+              );
+            },
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   bool _onSwipe(

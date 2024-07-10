@@ -1,24 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/db/sqflite.dart';
+import 'package:notes_app/model/task.dart';
 import 'package:notes_app/pages/main_page.dart';
+import 'package:notes_app/utils/reducers.dart';
+import 'package:notes_app/utils/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final store = Store<AppState>(tasksReducer, initialState: AppState());
+
+  // Fetch tasks from the database asynchronously
+  var tasks = await fetchTasksFromDb();
+  store.dispatch(InitializeTasksAction(tasks));
+
+  runApp(MyApp(store: store));
+}
+
+// Simulated async function to fetch tasks from a database
+Future<List<Task>> fetchTasksFromDb() async {
+  // Replace this with your actual database fetching logic
+  var taskMaps = await Db.getTasks(); // Example of your DB fetching method
+  return taskMaps.map((e) => Task.fromMap(e)).toList();
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Store<AppState> store;
+
+  const MyApp({super.key, required this.store});
   // This widget is the root of your application
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Notes App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x00ff896f)),
-          useMaterial3: true,
-          fontFamily: 'Poppins'),
-      home: const MainPage(),
+    return StoreProvider<AppState>(
+      store: store,
+      child: MaterialApp(
+        title: 'Notes App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: const Color(0x00ff896f)),
+            useMaterial3: true,
+            fontFamily: 'Poppins'),
+        home: const MainPage(),
+      ),
     );
   }
 }

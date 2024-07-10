@@ -47,6 +47,16 @@ class Db {
     await db.insert('tasks', task);
   }
 
+  static Future<void> updateTask(Map<String, dynamic> task) async {
+    if (!initialized) await init();
+    await db.update('tasks', task, where: 'id = ?', whereArgs: [task['id']]);
+  }
+
+  static Future<void> deleteTask(String taskId) async {
+    if (!initialized) await init();
+    await db.delete('tasks', where: 'id = ?', whereArgs: [taskId]);
+  }
+
   static Future<void> insertNote(Map<String, dynamic> note) async {
     if (!initialized) await init();
     await db.insert('notes', note);

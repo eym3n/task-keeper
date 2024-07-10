@@ -43,6 +43,10 @@ dependencies:
   sqflite: ^2.3.3+1
   path: ^1.9.0
   mobkit_dashed_border: ^0.0.6
+  redux: ^5.0.0
+  flutter_redux: ^0.10.0
+  modal_bottom_sheet: ^3.0.0
+  tuple: ^2.0.2
 
 dev_dependencies:
   flutter_test:
