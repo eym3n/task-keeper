@@ -88,25 +88,78 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Poppins
+    - family: San Francisco
       fonts:
-        - asset: assets/fonts/Poppins-Thin.ttf
-          weight: 100
-        - asset: assets/fonts/Poppins-Light.ttf
-          weight: 300
-        - asset: assets/fonts/Poppins-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Poppins-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Poppins-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Poppins-ExtraBold.ttf
-          weight: 800
-        - asset: assets/fonts/Poppins-Regular.ttf
-        - asset: assets/fonts/Poppins-Italic.ttf
+        - asset: assets/fonts/SF-Pro-Display-Black.ttf
+          weight: 900
+        - asset: assets/fonts/SF-Pro-Display-BlackItalic.ttf
+          weight: 900
           style: italic
-        - asset: assets/fonts/Poppins-BoldItalic.ttf
+        - asset: assets/fonts/SF-Pro-Display-Bold.ttf
           weight: 700
+        - asset: assets/fonts/SF-Pro-Display-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/SF-Pro-Display-Heavy.ttf
+          weight: 800
+        - asset: assets/fonts/SF-Pro-Display-HeavyItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/SF-Pro-Display-Light.ttf
+          weight: 300
+        - asset: assets/fonts/SF-Pro-Display-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/SF-Pro-Display-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/SF-Pro-Display-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/SF-Pro-Display-Regular.ttf
+        - asset: assets/fonts/SF-Pro-Display-RegularItalic.ttf
+          style: italic
+        - asset: assets/fonts/SF-Pro-Display-Semibold.ttf
+          weight: 600
+        - asset: assets/fonts/SF-Pro-Display-SemiboldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/SF-Pro-Display-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/SF-Pro-Display-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/SF-Pro-Display-Ultralight.ttf
+          weight: 200
+        - asset: assets/fonts/SF-Pro-Display-UltralightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/SF-Pro-Text-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/SF-Pro-Text-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/SF-Pro-Text-Heavy.ttf
+          weight: 800
+        - asset: assets/fonts/SF-Pro-Text-HeavyItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/SF-Pro-Text-Light.ttf
+          weight: 300
+        - asset: assets/fonts/SF-Pro-Text-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/SF-Pro-Text-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/SF-Pro-Text-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/SF-Pro-Text-Regular.ttf
+        - asset: assets/fonts/SF-Pro-Text-RegularItalic.ttf
+          style: italic
+        - asset: assets/fonts/SF-Pro-Text-Semibold.ttf
+          weight: 600
+        - asset: assets/fonts/SF-Pro-Text-SemiboldItalic.ttf
+          weight: 600
           style: italic
 
   #

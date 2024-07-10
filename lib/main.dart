@@ -40,10 +40,10 @@ class MyApp extends StatelessWidget {
         title: 'Notes App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            colorScheme:
-                ColorScheme.fromSeed(seedColor: const Color(0x00ff896f)),
-            useMaterial3: true,
-            fontFamily: 'Poppins'),
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x00ff896f)),
+          useMaterial3: true,
+          fontFamily: 'San Francisco',
+        ),
         home: const MainPage(),
       ),
     );
