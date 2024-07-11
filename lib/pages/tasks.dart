@@ -41,6 +41,7 @@ class _TasksPageState extends State<TasksPage> {
 
               final taskWidgets = tasks
                   .map((task) => TaskWidget(
+                        key: ValueKey(task.id),
                         task: task,
                       ))
                   .toList();
