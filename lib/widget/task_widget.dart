@@ -185,12 +185,12 @@ class _TaskWidgetState extends State<TaskWidget> {
               height: 150,
               width: 150,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+                padding: const EdgeInsets.only(
+                    top: 15, left: 15, right: 15, bottom: 15),
                 child: Stack(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ListView(
+                      padding: const EdgeInsets.only(bottom: 50),
                       children: [
                         SizedBox(
                           child: Text(
@@ -206,16 +206,14 @@ class _TaskWidgetState extends State<TaskWidget> {
                         const SizedBox(
                           height: 5,
                         ),
-                        Expanded(
-                          child: Text(
-                            widget.task.description,
-                            softWrap: true,
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                                color: Colors.grey.shade700,
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w400),
-                          ),
+                        Text(
+                          widget.task.description,
+                          softWrap: true,
+                          overflow: TextOverflow.clip,
+                          style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
