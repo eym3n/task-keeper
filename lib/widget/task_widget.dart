@@ -190,6 +190,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 child: Stack(
                   children: [
                     ListView(
+                      physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.only(bottom: 50),
                       children: [
                         SizedBox(
