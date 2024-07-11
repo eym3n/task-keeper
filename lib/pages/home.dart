@@ -195,6 +195,7 @@ class _HomePageState extends State<HomePage> {
                         : Align(
                             alignment: Alignment.centerLeft,
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 const Text(
@@ -204,11 +205,32 @@ class _HomePageState extends State<HomePage> {
                                       fontWeight: FontWeight.w600),
                                 ),
                                 const SizedBox(width: 12.0),
-                                Text('${thisWeeksTasks.length} tasks',
-                                    style: TextStyle(
-                                        fontSize: 13.0,
-                                        color: Colors.grey.shade500,
-                                        fontWeight: FontWeight.w500))
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: 5,
+                                      width: 5,
+                                      decoration: const BoxDecoration(
+                                          color: Colors.blue,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.blue,
+                                                blurRadius: 8,
+                                                spreadRadius: 0.3)
+                                          ],
+                                          shape: BoxShape.circle),
+                                    ),
+                                    const SizedBox(width: 5.0),
+                                    Text(
+                                        '${thisWeeksTasks.length} tasks this week',
+                                        style: TextStyle(
+                                            fontSize: 13.0,
+                                            color: Colors.blue.shade500,
+                                            fontWeight: FontWeight.w500)),
+                                    const SizedBox(width: 15.0),
+                                  ],
+                                )
                               ],
                             ),
                           )),
