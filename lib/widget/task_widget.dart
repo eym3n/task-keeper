@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_app/model/task.dart';
 import 'package:notes_app/pages/task_editor.dart';
+import 'package:notes_app/utils/functions.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:redux/redux.dart';
 import 'package:tuple/tuple.dart';
@@ -19,6 +21,13 @@ class TaskWidget extends StatefulWidget {
 class _TaskWidgetState extends State<TaskWidget> {
   final titleColor = const Color(0xFF000000);
   final iconColor = const Color.fromARGB(255, 80, 80, 80);
+  late bool isDeadlineApproaching;
+
+  @override
+  void initState() {
+    super.initState();
+    isDeadlineApproaching = deadlineApproaching(widget.task.date);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -214,28 +223,73 @@ class _TaskWidgetState extends State<TaskWidget> {
                       bottom: 0,
                       right: 0,
                       child: Container(
+                        height: 30,
+                        width: 150,
                         decoration: BoxDecoration(
-                          color: widget.task.completed
-                              ? Colors.green.shade700
-                              : widget.task.color,
-                          borderRadius: BorderRadius.circular(20.0),
                           boxShadow: [
                             BoxShadow(
                               color: widget.task.color.withOpacity(0.8),
                               blurRadius: 10.0,
-                              spreadRadius: 10.0,
-                              offset: const Offset(0.5, 0.8),
+                              spreadRadius: 16.0,
                             )
                           ],
                         ),
-                        child: Icon(
-                          !widget.task.completed
-                              ? CupertinoIcons.time_solid
-                              : CupertinoIcons.check_mark_circled_solid,
-                          color: !widget.task.completed
-                              ? Colors.black.withOpacity(0.8)
-                              : Colors.white,
-                          size: 30.0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                                height: 18,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                decoration: BoxDecoration(
+                                  color: isDeadlineApproaching &&
+                                          !widget.task.completed
+                                      ? Colors.red.shade700.withOpacity(0.7)
+                                      : Colors.white.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.15),
+                                      blurRadius: 10.0,
+                                      spreadRadius: 5.0,
+                                      offset: const Offset(0.5, 0.8),
+                                    )
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    DateFormat.jm()
+                                        .format(widget.task.date)
+                                        .toString(),
+                                    style: TextStyle(
+                                        color: isDeadlineApproaching &&
+                                                !widget.task.completed
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                )),
+                            const SizedBox(width: 5),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: widget.task.completed
+                                    ? Colors.green.shade700
+                                    : widget.task.color,
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Icon(
+                                !widget.task.completed
+                                    ? CupertinoIcons.time_solid
+                                    : CupertinoIcons.check_mark_circled_solid,
+                                color: !widget.task.completed
+                                    ? Colors.black.withOpacity(0.8)
+                                    : Colors.white,
+                                size: 30.0,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     )

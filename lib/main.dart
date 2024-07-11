@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/db/sqflite.dart';
 import 'package:notes_app/model/task.dart';
 import 'package:notes_app/pages/main_page.dart';
+import 'package:notes_app/utils/functions.dart';
 import 'package:notes_app/utils/reducers.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -14,6 +15,7 @@ void main() async {
 
   // Fetch tasks from the database asynchronously
   var tasks = await fetchTasksFromDb();
+  tasks = sortByRelevance(tasks);
   store.dispatch(InitializeTasksAction(tasks));
 
   runApp(MyApp(store: store));

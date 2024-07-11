@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:notes_app/model/task.dart';
 import 'package:intl/intl.dart';
 import 'package:notes_app/pages/task_editor.dart';
+import 'package:notes_app/utils/functions.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:redux/redux.dart';
 import 'package:tuple/tuple.dart';
@@ -22,6 +23,13 @@ class TaskCard extends StatefulWidget {
 class _TaskCardState extends State<TaskCard> {
   final titleColor = const Color(0xFF1B188E);
   final iconColor = const Color.fromARGB(255, 80, 80, 80);
+  late bool isDeadlineApproaching;
+
+  @override
+  void initState() {
+    super.initState();
+    isDeadlineApproaching = deadlineApproaching(widget.task.date);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -222,14 +230,38 @@ class _TaskCardState extends State<TaskCard> {
                       const SizedBox(
                         height: 5,
                       ),
-                      Flexible(
-                        child: Text(
-                            DateFormat.jm().format(widget.task.date).toString(),
-                            style: TextStyle(
-                                color: Colors.grey.shade600.withOpacity(0.8),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w600)),
-                      ),
+                      Container(
+                          height: 18,
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          decoration: BoxDecoration(
+                            color:
+                                isDeadlineApproaching && !widget.task.completed
+                                    ? Colors.red.shade700.withOpacity(0.7)
+                                    : Colors.white.withOpacity(0.7),
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.15),
+                                blurRadius: 10.0,
+                                spreadRadius: 5.0,
+                                offset: const Offset(0.5, 0.8),
+                              )
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              DateFormat.jm()
+                                  .format(widget.task.date)
+                                  .toString(),
+                              style: TextStyle(
+                                  color: isDeadlineApproaching &&
+                                          !widget.task.completed
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ))
                     ],
                   )
                 ],
