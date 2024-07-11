@@ -7,6 +7,7 @@ import 'package:notes_app/pages/task_editor.dart';
 import 'package:notes_app/utils/functions.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:redux/redux.dart';
+import 'package:toastification/toastification.dart';
 import 'package:tuple/tuple.dart';
 
 class TaskWidget extends StatefulWidget {
@@ -50,6 +51,25 @@ class _TaskWidgetState extends State<TaskWidget> {
           onDoubleTap: () {
             widget.task.completed = !widget.task.completed;
             updateTask(widget.task.id, widget.task);
+
+            toastification.show(
+              context: context, // optional if you use ToastificationWrapper
+              title: (widget.task.completed
+                  ? const Text('Marked as done')
+                  : const Text('Marked as undone')),
+              primaryColor:
+                  (widget.task.completed ? Colors.green : Colors.black),
+              showProgressBar: false,
+              icon: Icon(
+                widget.task.completed
+                    ? Icons.check_circle_outline
+                    : Icons.timelapse_rounded,
+                color: widget.task.completed ? Colors.green : Colors.black,
+                size: 20,
+              ),
+              animationDuration: const Duration(milliseconds: 200),
+              autoCloseDuration: const Duration(seconds: 2),
+            );
           },
           onLongPress: () {
             showModalBottomSheet(
@@ -66,6 +86,29 @@ class _TaskWidgetState extends State<TaskWidget> {
                             onTap: () {
                               widget.task.completed = false;
                               updateTask(widget.task.id, widget.task);
+                              toastification.show(
+                                context:
+                                    context, // optional if you use ToastificationWrapper
+                                title: (widget.task.completed
+                                    ? const Text('Marked as done')
+                                    : const Text('Marked as undone')),
+                                primaryColor: (widget.task.completed
+                                    ? Colors.green
+                                    : Colors.black),
+                                showProgressBar: false,
+                                icon: Icon(
+                                  widget.task.completed
+                                      ? Icons.check_circle_outline
+                                      : Icons.timelapse_rounded,
+                                  color: widget.task.completed
+                                      ? Colors.green
+                                      : Colors.black,
+                                  size: 20,
+                                ),
+                                animationDuration:
+                                    const Duration(milliseconds: 200),
+                                autoCloseDuration: const Duration(seconds: 2),
+                              );
                               Navigator.pop(context);
                             },
                             child: Container(
@@ -97,6 +140,29 @@ class _TaskWidgetState extends State<TaskWidget> {
                             onTap: () {
                               widget.task.completed = true;
                               updateTask(widget.task.id, widget.task);
+                              toastification.show(
+                                context:
+                                    context, // optional if you use ToastificationWrapper
+                                title: (widget.task.completed
+                                    ? const Text('Marked as done')
+                                    : const Text('Marked as undone')),
+                                primaryColor: (widget.task.completed
+                                    ? Colors.green
+                                    : Colors.black),
+                                showProgressBar: false,
+                                icon: Icon(
+                                  widget.task.completed
+                                      ? Icons.check_circle_outline
+                                      : Icons.timelapse_rounded,
+                                  color: widget.task.completed
+                                      ? Colors.green
+                                      : Colors.black,
+                                  size: 20,
+                                ),
+                                animationDuration:
+                                    const Duration(milliseconds: 200),
+                                autoCloseDuration: const Duration(seconds: 2),
+                              );
                               Navigator.pop(context);
                             },
                             child: Container(
@@ -126,8 +192,16 @@ class _TaskWidgetState extends State<TaskWidget> {
                           )),
                     InkWell(
                       onTap: () {
-                        widget.task.completed = true;
                         deleteTask(widget.task.id);
+                        toastification.show(
+                          context:
+                              context, // optional if you use ToastificationWrapper
+                          title: const Text('Task deleted'),
+                          primaryColor: Colors.red,
+                          showProgressBar: false,
+                          animationDuration: const Duration(milliseconds: 200),
+                          autoCloseDuration: const Duration(seconds: 2),
+                        );
                         Navigator.pop(context);
                       },
                       child: Container(

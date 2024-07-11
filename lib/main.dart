@@ -7,6 +7,7 @@ import 'package:notes_app/utils/reducers.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:toastification/toastification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,15 +36,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
       store: store,
-      child: MaterialApp(
-        title: 'Notes App',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x00ff896f)),
-          useMaterial3: true,
-          fontFamily: 'San Francisco',
+      child: ToastificationWrapper(
+        child: MaterialApp(
+          title: 'Notes App',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: const Color(0x00ff896f)),
+            useMaterial3: true,
+            fontFamily: 'San Francisco',
+          ),
+          home: const MainPage(),
         ),
-        home: const MainPage(),
       ),
     );
   }

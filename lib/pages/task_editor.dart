@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:notes_app/model/task.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:redux/redux.dart';
+import 'package:toastification/toastification.dart';
 import 'package:tuple/tuple.dart';
 
 List<Color> colors = [
@@ -212,6 +213,21 @@ class _TaskEditorState extends State<TaskEditor> {
                                                 deleteTask(widget.task.id);
                                                 Navigator.of(context).pop();
                                                 Navigator.of(context).pop();
+                                                deleteTask(widget.task.id);
+                                                toastification.show(
+                                                  context:
+                                                      context, // optional if you use ToastificationWrapper
+                                                  title: const Text(
+                                                      'Task deleted'),
+                                                  primaryColor: Colors.red,
+                                                  showProgressBar: false,
+                                                  animationDuration:
+                                                      const Duration(
+                                                          milliseconds: 200),
+                                                  autoCloseDuration:
+                                                      const Duration(
+                                                          seconds: 2),
+                                                );
                                               },
                                             ),
                                           ],
