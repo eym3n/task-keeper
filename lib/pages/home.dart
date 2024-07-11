@@ -17,11 +17,13 @@ class HomePage extends StatefulWidget {
 
 const cardColor = Color(0xFFFFF1BE);
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin<HomePage> {
   final CardSwiperController controller = CardSwiperController();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -278,4 +280,7 @@ class _HomePageState extends State<HomePage> {
   ) {
     return true;
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

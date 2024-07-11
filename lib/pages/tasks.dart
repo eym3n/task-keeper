@@ -16,7 +16,8 @@ class TasksPage extends StatefulWidget {
 
 const backgroundColor = Color(0xFFFF896F);
 
-class _TasksPageState extends State<TasksPage> {
+class _TasksPageState extends State<TasksPage>
+    with AutomaticKeepAliveClientMixin<TasksPage> {
   late DateTime selectedDay;
 
   @override
@@ -27,6 +28,7 @@ class _TasksPageState extends State<TasksPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -264,4 +266,7 @@ class _TasksPageState extends State<TasksPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
