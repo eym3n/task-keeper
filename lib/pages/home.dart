@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Good Morning\nAymen',
                           style: TextStyle(
-                              fontSize: 28.0, fontWeight: FontWeight.w500),
+                              fontSize: 30.0, fontWeight: FontWeight.w500),
                         ),
                         CircleAvatar(
                           radius: 25.0,
@@ -135,13 +135,13 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     (todaysTasks.length > 2
-                        ? const SizedBox(height: 60.0)
+                        ? const SizedBox(height: 46.0)
                         : (todaysTasks.isEmpty
                             ? const SizedBox(
                                 height: 0,
                               )
                             : const SizedBox(
-                                height: 30,
+                                height: 35,
                               ))),
                     (cards.isEmpty
                         ? SizedBox(

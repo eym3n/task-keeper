@@ -165,7 +165,7 @@ class _TaskCardState extends State<TaskCard> {
                 BoxShadow(
                   color: Colors.white.withOpacity(0.5),
                   blurRadius: 20.0,
-                  spreadRadius: 20.0,
+                  spreadRadius: 15.0,
                   offset: const Offset(0, -20),
                 )
               ],
