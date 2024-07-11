@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
           child: StoreConnector<AppState, List<Task>>(
             converter: (store) => store.state.tasks,
             builder: (BuildContext context, List<Task> tasks) {
+              final todaysDate = DateTime.now();
               final todaysTasks = tasks
                   .where((task) =>
                       task.date.day == DateTime.now().day &&
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
                   .toList();
               final cards = todaysTasks
                   .map((task) => TaskCard(
+                        key: Key(task.id.toString()),
                         task: task,
                         showDescription: false,
                       ))
@@ -43,13 +45,15 @@ class _HomePageState extends State<HomePage> {
 
               final thisWeeksTasks = tasks
                   .where((task) =>
-                      task.date.isAfter(DateTime.now()) &&
+                      task.date.isAfter(DateTime(todaysDate.year,
+                          todaysDate.month, todaysDate.day, 23, 59, 59)) &&
                       task.date.isBefore(
                           DateTime.now().add(const Duration(days: 7))))
                   .toList();
 
               final taskWidgets = thisWeeksTasks
                   .map((task) => TaskWidget(
+                        key: Key(task.id.toString()),
                         task: task,
                       ))
                   .toList();
