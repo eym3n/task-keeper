@@ -13,7 +13,6 @@ void main() async {
 
   final store = Store<AppState>(tasksReducer, initialState: AppState());
 
-  // Fetch tasks from the database asynchronously
   var tasks = await fetchTasksFromDb();
   tasks = sortByRelevance(tasks);
   store.dispatch(InitializeTasksAction(tasks));
@@ -21,10 +20,8 @@ void main() async {
   runApp(MyApp(store: store));
 }
 
-// Simulated async function to fetch tasks from a database
 Future<List<Task>> fetchTasksFromDb() async {
-  // Replace this with your actual database fetching logic
-  var taskMaps = await Db.getTasks(); // Example of your DB fetching method
+  var taskMaps = await Db.getTasks();
   return taskMaps.map((e) => Task.fromMap(e)).toList();
 }
 
