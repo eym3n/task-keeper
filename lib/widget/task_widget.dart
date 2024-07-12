@@ -12,8 +12,9 @@ import 'package:tuple/tuple.dart';
 
 class TaskWidget extends StatefulWidget {
   final Task task;
+  final bool showTime;
 
-  const TaskWidget({super.key, required this.task});
+  const TaskWidget({super.key, required this.task, this.showTime = false});
 
   @override
   State<TaskWidget> createState() => _TaskWidgetState();
@@ -27,7 +28,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   @override
   void initState() {
     super.initState();
-    isDeadlineApproaching = deadlineApproaching(widget.task.date);
+    isDeadlineApproaching = deadlineApproaching(widget.task.date.toLocal());
   }
 
   @override
@@ -332,9 +333,13 @@ class _TaskWidgetState extends State<TaskWidget> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    DateFormat.jm()
-                                        .format(widget.task.date)
-                                        .toString(),
+                                    (widget.showTime
+                                        ? DateFormat.jm()
+                                            .format(widget.task.date.toLocal())
+                                            .toString()
+                                        : DateFormat.EEEE()
+                                            .format(widget.task.date.toLocal())
+                                            .toString()),
                                     style: TextStyle(
                                         color: isDeadlineApproaching &&
                                                 !widget.task.completed

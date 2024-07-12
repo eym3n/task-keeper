@@ -45,6 +45,7 @@ class _TasksPageState extends State<TasksPage>
                   .map((task) => TaskWidget(
                         key: ValueKey(task.id),
                         task: task,
+                        showTime: true,
                       ))
                   .toList();
               return Column(

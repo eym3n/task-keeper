@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:notes_app/pages/task_editor.dart';
 import 'package:notes_app/utils/functions.dart';
 import 'package:notes_app/utils/redux.dart';
+import 'package:notes_app/widget/time_lapse_icon.dart';
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
 import 'package:tuple/tuple.dart';
@@ -278,7 +279,7 @@ class _TaskCardState extends State<TaskCard> {
                         decoration: BoxDecoration(
                           color: widget.task.completed
                               ? Colors.green.shade700
-                              : widget.task.color,
+                              : Colors.transparent,
                           borderRadius: BorderRadius.circular(20.0),
                           boxShadow: [
                             BoxShadow(
@@ -289,15 +290,27 @@ class _TaskCardState extends State<TaskCard> {
                             )
                           ],
                         ),
-                        child: Icon(
-                          !widget.task.completed
-                              ? CupertinoIcons.time_solid
-                              : CupertinoIcons.check_mark_circled_solid,
-                          color: !widget.task.completed
-                              ? Colors.black.withOpacity(0.8)
-                              : Colors.white,
-                          size: 30.0,
-                        ),
+                        child: (widget.task.completed
+                            ? const Icon(
+                                CupertinoIcons.check_mark_circled_solid,
+                                color: Colors.white,
+                                size: 30.0,
+                              )
+                            : (timeElapsed(widget.task.date.toLocal())
+                                ? Icon(
+                                    CupertinoIcons.xmark_circle_fill,
+                                    color: Colors.black.withOpacity(0.8),
+                                    size: 31.0,
+                                  )
+                                : TimeLapseIcon(
+                                    start: DateTime(
+                                        DateTime.now().year,
+                                        DateTime.now().month,
+                                        DateTime.now().day,
+                                        0,
+                                        0,
+                                        0),
+                                    end: widget.task.date.toLocal()))),
                       ),
                       const SizedBox(
                         height: 5,
@@ -323,7 +336,7 @@ class _TaskCardState extends State<TaskCard> {
                           child: Center(
                             child: Text(
                               DateFormat.jm()
-                                  .format(widget.task.date)
+                                  .format(widget.task.date.toLocal())
                                   .toString(),
                               style: TextStyle(
                                   color: isDeadlineApproaching &&

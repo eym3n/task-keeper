@@ -35,3 +35,7 @@ List<Task> sortByRelevance(List<Task> tasks) {
   });
   return tasks;
 }
+
+bool timeElapsed(DateTime date) {
+  return date.isBefore(DateTime.now());
+}

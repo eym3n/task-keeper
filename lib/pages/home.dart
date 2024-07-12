@@ -243,7 +243,7 @@ class _HomePageState extends State<HomePage>
                     SizedBox(
                       width: double.infinity,
                       height:
-                          (taskWidgets.length / 2 + 1).toInt() * 165.0 + 190,
+                          (taskWidgets.length / 2 + 2).toInt() * 165.0 + 180,
                       child: GridView.count(
                         padding:
                             const EdgeInsets.only(left: 5.0, right: 5, top: 30),

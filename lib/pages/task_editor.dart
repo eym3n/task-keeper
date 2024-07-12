@@ -328,7 +328,7 @@ class _TaskEditorState extends State<TaskEditor> {
                             Text(
                                 DateFormat.yMMMEd()
                                     .add_jm()
-                                    .format(widget.task.date)
+                                    .format(widget.task.date.toLocal())
                                     .toString(),
                                 style: const TextStyle(
                                     fontSize: 16,
@@ -342,10 +342,10 @@ class _TaskEditorState extends State<TaskEditor> {
                             showTitleActions: true,
                             minTime: DateTime(2018, 3, 5),
                             maxTime: DateTime(2019, 6, 7),
-                            currentTime: widget.task.date,
+                            currentTime: widget.task.date.toLocal(),
                             onChanged: (date) {}, onConfirm: (date) {
                           setState(() {
-                            widget.task.date = date;
+                            widget.task.date = date.toLocal();
                           });
                           updateTask(widget.task.id, widget.task);
                         }, locale: LocaleType.en);
