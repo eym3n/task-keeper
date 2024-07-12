@@ -22,7 +22,7 @@ class TaskCard extends StatefulWidget {
 }
 
 class _TaskCardState extends State<TaskCard> {
-  final titleColor = const Color(0xFF1B188E);
+  final titleColor = Colors.black;
   final iconColor = const Color.fromARGB(255, 80, 80, 80);
   late bool isDeadlineApproaching;
 
