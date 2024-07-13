@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage>
                         Text(
                           'Good Morning\nAymen',
                           style: TextStyle(
-                              fontSize: 30.0, fontWeight: FontWeight.w500),
+                              fontSize: 32.0, fontWeight: FontWeight.w600),
                         ),
                         CircleAvatar(
                           radius: 25.0,
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage>
                                       .format(DateTime.now())
                                       .toString(),
                                   style: const TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 19,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
@@ -174,10 +174,9 @@ class _HomePageState extends State<HomePage>
                             width: double.infinity,
                             child: CardSwiper(
                               maxAngle: 40,
-                              allowedSwipeDirection: (todaysTasks.length > 1
-                                  ? const AllowedSwipeDirection.symmetric(
-                                      horizontal: true, vertical: false)
-                                  : const AllowedSwipeDirection.none()),
+                              allowedSwipeDirection:
+                                  (const AllowedSwipeDirection.symmetric(
+                                      horizontal: true, vertical: false)),
                               controller: controller,
                               cardsCount: cards.length,
                               onSwipe: _onSwipe,
