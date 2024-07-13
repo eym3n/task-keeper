@@ -45,13 +45,33 @@ class _NotesPageState extends State<NotesPage> {
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: (noteWidgets.length) * 180.0 + 180,
-                      child: Column(
-                        children: noteWidgets,
-                      ),
-                    ),
+                    child: (notes.isEmpty
+                        ? SizedBox(
+                            height: 380,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                    height: 250,
+                                    child: Image.asset(
+                                        'assets/images/empty3.png')),
+                                const Text(
+                                  "You don't have any notes yet",
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          )
+                        : SizedBox(
+                            width: double.infinity,
+                            height: (noteWidgets.length) * 180.0 + 180,
+                            child: Column(
+                              children: noteWidgets,
+                            ),
+                          )),
                   ),
                 ],
               ),

@@ -14,6 +14,7 @@ import 'package:toastification/toastification.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Db.init();
   var tasks = sortByRelevance(await fetchTasksFromDb());
   var notes = sortNotesByRelevance(await fetchNotesFromDb());
   // var notes = <Note>[];

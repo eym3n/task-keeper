@@ -1,4 +1,4 @@
-# Notes & Todo
+# TaskKeeper
 
 A feature-rich Flutter application for managing and organizing your tasks and notes.
 

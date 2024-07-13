@@ -30,6 +30,8 @@ class Db {
         important INTEGER,
         color INTEGER
       )
+      ''');
+      db.execute('''
       CREATE TABLE notes(
         id TEXT PRIMARY KEY,
         content TEXT,

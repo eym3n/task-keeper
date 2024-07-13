@@ -1,5 +1,5 @@
 name: notes_app
-description: 'A new Flutter project.'
+description: 'A feature-rich mobile application for managing and organizing your tasks and notes.'
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -51,6 +51,8 @@ dependencies:
   flutter_datetime_picker_plus: ^2.2.0
   toastification: ^2.0.0
   appflowy_editor: ^3.1.0
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -165,6 +167,12 @@ flutter:
           weight: 600
           style: italic
 
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+flutter_launcher_icons:
+  image_path: 'assets/icon/icon-full.png'
+  android: true
+  ios: true
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
+flutter_native_splash:
+  color: '#fcf6ea'
+  image: assets/icon/icon-transparent.png
