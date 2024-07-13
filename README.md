@@ -61,7 +61,7 @@ A feature-rich Flutter application for managing and organizing your tasks and no
 - [table_calendar](https://pub.dev/packages/table_calendar): Calendar widget
 - [toastification](https://pub.dev/packages/toastification): Toast notifications
 
-### Resources
+## Resources
 
 A few resources to get you started if this is your first Flutter project:
 
