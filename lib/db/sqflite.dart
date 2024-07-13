@@ -32,8 +32,7 @@ class Db {
       )
       CREATE TABLE notes(
         id TEXT PRIMARY KEY,
-        title TEXT,
-        description TEXT,
+        content TEXT,
         date TEXT,
         lastModified TEXT
       )
@@ -60,6 +59,16 @@ class Db {
   static Future<void> insertNote(Map<String, dynamic> note) async {
     if (!initialized) await init();
     await db.insert('notes', note);
+  }
+
+  static Future<void> updateNote(Map<String, dynamic> note) async {
+    if (!initialized) await init();
+    await db.update('notes', note, where: 'id = ?', whereArgs: [note['id']]);
+  }
+
+  static Future<void> deleteNote(String noteId) async {
+    if (!initialized) await init();
+    await db.delete('notes', where: 'id = ?', whereArgs: [noteId]);
   }
 
   static Future<List<Map<String, dynamic>>> getTasks() async {

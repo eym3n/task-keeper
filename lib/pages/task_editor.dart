@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -213,7 +212,6 @@ class _TaskEditorState extends State<TaskEditor> {
                                                 deleteTask(widget.task.id);
                                                 Navigator.of(context).pop();
                                                 Navigator.of(context).pop();
-                                                deleteTask(widget.task.id);
                                                 toastification.show(
                                                   context:
                                                       context, // optional if you use ToastificationWrapper

@@ -24,3 +24,36 @@ AppState tasksReducer(AppState state, dynamic action) {
 
   return state;
 }
+
+AppState notesReducer(AppState state, dynamic action) {
+  if (action is AddNoteAction) {
+    Db.insertNote(action.note.toMap());
+    return AppState(
+        notes: sortNotesByRelevance(List.from(state.notes)..add(action.note)));
+  } else if (action is UpdateNoteAction) {
+    return AppState(
+        notes: sortNotesByRelevance(state.notes.map((note) {
+      Db.updateNote(note.toMap());
+      return note.id == action.id ? action.updatedNote : note;
+    }).toList()));
+  } else if (action is DeleteNoteAction) {
+    Db.deleteNote(action.id);
+    return AppState(
+        notes: sortNotesByRelevance(
+            state.notes.where((note) => note.id != action.id).toList()));
+  } else if (action is InitializeNotesAction) {
+    return AppState(notes: action.notes);
+  }
+
+  return state;
+}
+
+AppState appReducer(AppState state, dynamic action) {
+  AppState newTaskState = tasksReducer(state, action);
+  AppState newNoteState = notesReducer(state, action);
+
+  return AppState(
+    tasks: newTaskState.tasks,
+    notes: newNoteState.notes,
+  );
+}

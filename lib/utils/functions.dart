@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:notes_app/model/note.dart';
 import 'package:notes_app/model/task.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -36,6 +38,46 @@ List<Task> sortByRelevance(List<Task> tasks) {
   return tasks;
 }
 
+List<Note> sortNotesByRelevance(List<Note> notes) {
+  notes.sort((a, b) {
+    return -1 * (a.lastModified.compareTo(b.lastModified));
+  });
+  return notes;
+}
+
 bool timeElapsed(DateTime date) {
   return date.isBefore(DateTime.now());
+}
+
+String extractTextFromJson(String jsonString) {
+  try {
+    final Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+
+    final document = jsonMap['document'];
+    if (document == null) return '';
+
+    final children = document['children'];
+    if (children == null || children is! List) return '';
+
+    StringBuffer extractedText = StringBuffer();
+
+    for (final child in children) {
+      final data = child['data'];
+      if (data == null) continue;
+
+      final delta = data['delta'];
+      if (delta == null || delta is! List) continue;
+
+      for (final item in delta) {
+        if (item['insert'] != null) {
+          extractedText.write(item['insert']);
+        }
+      }
+      extractedText.write('\n'); // Adding line break after each node's text
+    }
+
+    return extractedText.toString().trim();
+  } catch (e) {
+    return 'Error decoding JSON: $e';
+  }
 }
