@@ -2,7 +2,7 @@
 
 A feature-rich Flutter application for managing and organizing your tasks and notes.
 
-![Home screen](/screenshots/1.png?raw=true 'Home Screen')
+![Presentaion](/screenshots/cover.png?raw=true)
 ![Tasks screen](/screenshots/4.png?raw=true 'Tasks Screen')
 
 ## Features
