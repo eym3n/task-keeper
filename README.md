@@ -2,6 +2,9 @@
 
 A feature-rich Flutter application for managing and organizing your tasks and notes.
 
+![Home screen](/screenshots/1.png?raw=true 'Home Screen')
+![Tasks screen](/screenshots/4.png?raw=true 'Tasks Screen')
+
 ## Features
 
 - Create, edit, and delete tasks/notes
