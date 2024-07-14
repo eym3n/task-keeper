@@ -461,10 +461,11 @@ class _FixedToolbar extends StatelessWidget {
             );
           },
           itemCount: items.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisSpacing: 20,
-            childAspectRatio: 1,
+            mainAxisExtent: MediaQuery.of(context).size.width / 6,
           ),
         );
       },
