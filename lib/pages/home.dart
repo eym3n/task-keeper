@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage>
                                     Text(
                                       'You have ${todaysTasks.length} task${todaysTasks.length > 1 ? 's' : ''} today',
                                       style: const TextStyle(
-                                          fontSize: 11,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ],
@@ -241,8 +241,7 @@ class _HomePageState extends State<HomePage>
                           )),
                     SizedBox(
                       width: double.infinity,
-                      height:
-                          (taskWidgets.length / 2 + 2).toInt() * 165.0 + 180,
+                      height: (taskWidgets.length ~/ 2 + 1) * 170.0 + 180,
                       child: GridView.count(
                         padding:
                             const EdgeInsets.only(left: 5.0, right: 5, top: 30),
