@@ -353,7 +353,7 @@ class _FixedToolbar extends StatelessWidget {
                     break;
                   case Icons.format_strikethrough:
                     editorState
-                        .toggleAttribute(AppFlowyRichTextKeys.backgroundColor);
+                        .toggleAttribute(AppFlowyRichTextKeys.strikethrough);
                     break;
                   case Icons.text_fields:
                     editorState.formatNode(null, (node) {
