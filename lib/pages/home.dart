@@ -7,6 +7,7 @@ import 'package:notes_app/model/task.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:notes_app/widget/task_card.dart';
 import 'package:notes_app/widget/task_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,6 +21,20 @@ const cardColor = Color(0xFFFFF1BE);
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage> {
   final CardSwiperController controller = CardSwiperController();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late Future<String> _name;
+  late String _nameValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _name = _prefs.then((prefs) => prefs.getString('name') ?? '');
+    _name.then((value) {
+      setState(() {
+        _nameValue = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -175,8 +190,8 @@ class _HomePageState extends State<HomePage>
                             child: CardSwiper(
                               maxAngle: 40,
                               allowedSwipeDirection:
-                                  (const AllowedSwipeDirection.symmetric(
-                                      horizontal: true, vertical: false)),
+                                  const AllowedSwipeDirection.symmetric(
+                                      horizontal: true, vertical: false),
                               controller: controller,
                               cardsCount: cards.length,
                               onSwipe: _onSwipe,
@@ -185,13 +200,16 @@ class _HomePageState extends State<HomePage>
                                   cards.length > 3 ? 3 : cards.length,
                               backCardOffset: const Offset(0, -20),
                               padding: EdgeInsets.zero,
-                              cardBuilder: (
-                                context,
-                                index,
-                                horizontalThresholdPercentage,
-                                verticalThresholdPercentage,
-                              ) =>
-                                  cards[index],
+                              cardBuilder: (context,
+                                  index,
+                                  horizontalThresholdPercentage,
+                                  verticalThresholdPercentage) {
+                                if (index < cards.length) {
+                                  return cards[index];
+                                } else {
+                                  return Container(); // Return an empty container if the index is out of range
+                                }
+                              },
                             ),
                           )),
                     const SizedBox(height: 30.0),

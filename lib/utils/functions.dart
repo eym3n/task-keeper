@@ -81,3 +81,7 @@ String extractTextFromJson(String jsonString) {
     return 'Error decoding JSON: $e';
   }
 }
+
+bool nameValid(String name) {
+  return name.trim().isNotEmpty;
+}
