@@ -5,6 +5,7 @@ import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:notes_app/model/task.dart';
+import 'package:notes_app/service/notification_service';
 import 'package:notes_app/utils/redux.dart';
 import 'package:redux/redux.dart';
 import 'package:toastification/toastification.dart';
@@ -226,6 +227,10 @@ class _TaskEditorState extends State<TaskEditor> {
                                                       const Duration(
                                                           seconds: 2),
                                                 );
+                                                NotificationService()
+                                                    .deleteNotification(
+                                                        int.parse(
+                                                            widget.task.id));
                                               },
                                             ),
                                           ],
@@ -344,6 +349,12 @@ class _TaskEditorState extends State<TaskEditor> {
                             onChanged: (date) {}, onConfirm: (date) {
                           setState(() {
                             widget.task.date = date.toLocal();
+                            NotificationService().scheduleNotification(
+                                id: int.parse(widget.task.id),
+                                title: widget.task.title,
+                                body: widget.task.description,
+                                scheduledNotificationDateTime:
+                                    widget.task.date);
                           });
                           updateTask(widget.task.id, widget.task);
                         }, locale: LocaleType.en);

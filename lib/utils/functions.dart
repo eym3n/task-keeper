@@ -6,17 +6,7 @@ import 'package:notes_app/model/task.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 String randId(int length) {
-  const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&*()-_=+[]{}|;:",.<>?/~`';
-  final random = Random();
-  return String.fromCharCodes(
-    Iterable.generate(
-      length,
-      (_) => characters.codeUnitAt(
-        random.nextInt(characters.length),
-      ),
-    ),
-  );
+  return '${Random().nextInt(100000)}';
 }
 
 bool deadlineApproaching(DateTime deadline) {

@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:mobkit_dashed_border/mobkit_dashed_border.dart';
 import 'package:notes_app/model/task.dart';
 import 'package:notes_app/pages/task_editor.dart';
+import 'package:notes_app/service/notification_service';
 import 'package:notes_app/utils/functions.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:redux/redux.dart';
@@ -27,21 +28,26 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       },
       builder: (context, addTask) {
         return InkWell(
-          onTap: () {
+          onTap: () async {
             var task = Task(
               id: randId(16),
               title: '',
               description: '',
               completed: false,
-              date: widget.date,
+              date: widget.date.add(const Duration(minutes: 15)),
             );
             addTask(task);
-            Navigator.push(
+            await Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => TaskEditor(
                           task: task,
                         )));
+            NotificationService().scheduleNotification(
+                id: int.parse(task.id),
+                title: task.title,
+                body: task.description,
+                scheduledNotificationDateTime: task.date);
           },
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,

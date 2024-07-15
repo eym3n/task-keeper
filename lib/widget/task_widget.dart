@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:notes_app/model/task.dart';
 import 'package:notes_app/pages/task_editor.dart';
+import 'package:notes_app/service/notification_service';
 import 'package:notes_app/utils/functions.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:redux/redux.dart';
@@ -204,6 +205,8 @@ class _TaskWidgetState extends State<TaskWidget> {
                           autoCloseDuration: const Duration(seconds: 2),
                         );
                         Navigator.pop(context);
+                        NotificationService()
+                            .deleteNotification(int.parse(widget.task.id));
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(horizontal: 50),
