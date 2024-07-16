@@ -44,7 +44,7 @@ class _NotesPageState extends State<NotesPage> {
                   ),
                   const SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     child: (notes.isEmpty
                         ? SizedBox(
                             height: 380,
