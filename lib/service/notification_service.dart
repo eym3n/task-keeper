@@ -60,5 +60,4 @@ class NotificationService {
   Future<void> deleteNotification(int id) async {
     return notificationsPlugin.cancel(id);
   }
-  
 }

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:notes_app/model/note.dart';
 import 'package:notes_app/model/task.dart';
+import 'package:notes_app/service/notification_service.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 String randId(int length) {
@@ -74,4 +75,28 @@ String extractTextFromJson(String jsonString) {
 
 bool nameValid(String name) {
   return name.trim().isNotEmpty;
+}
+
+void updateNotification(Task task) {
+  if (!task.completed) {
+    NotificationService().scheduleNotification(
+        id: int.parse(task.id),
+        title: task.title,
+        body: task.description,
+        scheduledNotificationDateTime: task.date);
+  } else {
+    NotificationService().deleteNotification(int.parse(task.id));
+  }
+}
+
+void deleteNotification(String id) {
+  NotificationService().deleteNotification(int.parse(id));
+}
+
+void addNotification(Task task) {
+  NotificationService().scheduleNotification(
+      id: int.parse(task.id),
+      title: task.title,
+      body: task.description,
+      scheduledNotificationDateTime: task.date);
 }

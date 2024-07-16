@@ -4,10 +4,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:mobkit_dashed_border/mobkit_dashed_border.dart';
 import 'package:notes_app/model/task.dart';
 import 'package:notes_app/pages/task_editor.dart';
-import 'package:notes_app/service/notification_service';
 import 'package:notes_app/utils/functions.dart';
 import 'package:notes_app/utils/redux.dart';
 import 'package:redux/redux.dart';
+import 'package:tuple/tuple.dart';
 
 class AddTaskWidget extends StatefulWidget {
   final DateTime date;
@@ -22,11 +22,18 @@ const backgroundColor = Color(0xFFFF896F);
 class _AddTaskWidgetState extends State<AddTaskWidget> {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, void Function(Task)>(
+    return StoreConnector<AppState,
+        Tuple2<void Function(Task), void Function(String)>>(
       converter: (Store<AppState> store) {
-        return (task) => store.dispatch(AddTaskAction(task));
+        return Tuple2(
+          (task) => store.dispatch(AddTaskAction(task)),
+          (taskId) => store.dispatch(DeleteTaskAction(taskId)),
+        );
       },
-      builder: (context, addTask) {
+      builder: (context, actions) {
+        final addTask = actions.item1;
+        final deleteTask = actions.item2;
+
         return InkWell(
           onTap: () async {
             var task = Task(
@@ -43,11 +50,9 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     builder: (context) => TaskEditor(
                           task: task,
                         )));
-            NotificationService().scheduleNotification(
-                id: int.parse(task.id),
-                title: task.title,
-                body: task.description,
-                scheduledNotificationDateTime: task.date);
+            if (task.isEmpty()) {
+              deleteTask(task.id);
+            }
           },
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,

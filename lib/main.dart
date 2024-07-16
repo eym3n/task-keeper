@@ -4,7 +4,7 @@ import 'package:notes_app/db/sqflite.dart';
 import 'package:notes_app/model/note.dart';
 import 'package:notes_app/model/task.dart';
 import 'package:notes_app/pages/main_page.dart';
-import 'package:notes_app/service/notification_service';
+import 'package:notes_app/service/notification_service.dart';
 import 'package:notes_app/utils/functions.dart';
 import 'package:notes_app/utils/reducers.dart';
 import 'package:notes_app/utils/redux.dart';
@@ -20,7 +20,7 @@ void main() async {
   tz.initializeTimeZones();
 
   NotificationService().initNotification().then((value) {
-    print('Notification service initialized');
+    debugPrint('Notification service initialized');
   });
 
   await Db.init();

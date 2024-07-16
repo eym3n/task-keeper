@@ -105,4 +105,13 @@ class Task {
   bool isOverdue() {
     return date.isBefore(DateTime.now().subtract(const Duration(days: 1)));
   }
+
+  /// Checks if the task is empty.
+  ///
+  /// A task is considered empty if both its [title] and [description] are empty strings.
+  ///
+  /// Returns `true` if the task is empty, otherwise `false`.
+  bool isEmpty() {
+    return title.isEmpty && description.isEmpty;
+  }
 }
