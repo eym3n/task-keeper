@@ -11,6 +11,7 @@ A feature-rich Flutter application for managing and organizing your tasks and no
 - Redux state management for efficient data handling
 - Customizable task widgets
 - User-friendly interface
+- Alerts and reminders
 
 ## Getting Started
 
@@ -59,6 +60,7 @@ A feature-rich Flutter application for managing and organizing your tasks and no
 - [sqflite](https://pub.dev/packages/sqflite): Local Database
 - [appflowy_editor](https://pub.dev/packages/appflowy_editor): Rich text editing
 - [table_calendar](https://pub.dev/packages/table_calendar): Calendar widget
+- [flutter_local_notifications](pub.dev/packages/flutter_local_notifications): Automatic scheduled notifications
 - [toastification](https://pub.dev/packages/toastification): Toast notifications
 
 ## Resources
