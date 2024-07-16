@@ -170,7 +170,7 @@ flutter:
           style: italic
 
 flutter_launcher_icons:
-  image_path: 'assets/icon/icon-full.png'
+  image_path: 'assets/icon/icon.png'
   android: true
   ios: true
   min_sdk_android: 21 # android min sdk min:16, default 21
