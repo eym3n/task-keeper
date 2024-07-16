@@ -79,15 +79,6 @@ class Task {
     return 'Task{id: $id, title: $title, description: $description, completed: $completed, date: $date, important: $important, color: $color}';
   }
 
-  /// Checks if the task is expired.
-  ///
-  /// A task is considered expired if its [date] is before the current date and time.
-  ///
-  /// Returns `true` if the task is expired, otherwise `false`.
-  bool isExpired() {
-    return date.isBefore(DateTime.now());
-  }
-
   /// Checks if the task is due.
   ///
   /// A task is considered due if its [date] is before the current date and time.
@@ -103,7 +94,7 @@ class Task {
   ///
   /// Returns `true` if the task is overdue, otherwise `false`.
   bool isOverdue() {
-    return date.isBefore(DateTime.now().subtract(const Duration(days: 1)));
+    return date.isBefore(DateTime.now());
   }
 
   /// Checks if the task is empty.

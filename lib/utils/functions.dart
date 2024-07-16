@@ -78,7 +78,7 @@ bool nameValid(String name) {
 }
 
 void updateNotification(Task task) {
-  if (!task.completed) {
+  if (!task.completed && !task.isOverdue()) {
     NotificationService().scheduleNotification(
         id: int.parse(task.id),
         title: task.title,
@@ -94,9 +94,11 @@ void deleteNotification(String id) {
 }
 
 void addNotification(Task task) {
-  NotificationService().scheduleNotification(
-      id: int.parse(task.id),
-      title: task.title,
-      body: task.description,
-      scheduledNotificationDateTime: task.date);
+  if (!task.completed && !task.isOverdue()) {
+    NotificationService().scheduleNotification(
+        id: int.parse(task.id),
+        title: task.title,
+        body: task.description,
+        scheduledNotificationDateTime: task.date);
+  }
 }

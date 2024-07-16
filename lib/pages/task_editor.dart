@@ -66,13 +66,14 @@ class _TaskEditorState extends State<TaskEditor> {
         final deleteTask = actions.item1;
         final updateTask = actions.item2;
 
-        return SingleChildScrollView(
+        return SizedBox(
+          height: MediaQuery.sizeOf(context).height,
+          width: MediaQuery.sizeOf(context).width,
           child: Stack(
             children: [
-              Container(
-                constraints: BoxConstraints(
-                    minHeight: MediaQuery.sizeOf(context).height),
-                child: Column(children: [
+              ListView(
+                padding: EdgeInsets.zero,
+                children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 30, right: 10),
                     child: Row(
@@ -287,7 +288,10 @@ class _TaskEditorState extends State<TaskEditor> {
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
-                ]),
+                  const SizedBox(
+                    height: 80,
+                  )
+                ],
               ),
               Positioned(
                   bottom: 0,
